@@ -40,7 +40,7 @@ class LatestMovieFragment :
         container?.setBackgroundColor(Color.BLACK)
         viewModel.apply {
             movie.observe(viewLifecycleOwner, Observer {
-                movieList= it as MutableList<Movie>?
+                movieList = it as MutableList<Movie>?
             })
         }
     }
@@ -50,6 +50,7 @@ class LatestMovieFragment :
         search_view?.addTextChangedListener(getTextWatcher(search_view))
         cancel_image_view.setOnClickListener {
             search_view.text?.clear()
+            listAdapter.submitList(movieList)
         }
     }
 
@@ -74,10 +75,10 @@ class LatestMovieFragment :
 
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
                 when (editText) {
-                    search_view -> if (s.length == 1) {
+                    search_view -> if (s.length > 1) {
                         filter.filter(s)
-                    } else if (s.length > 3) {
-                        filter.filter(s)
+                    } else if (s.isEmpty()) {
+                        listAdapter.submitList(movieList)
                     }
                 }
             }
@@ -90,12 +91,12 @@ class LatestMovieFragment :
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): FilterResults {
                 val charString = charSequence.toString()
-                 filteredList.clear()
+                filteredList.clear()
                 if (charString.isEmpty()) {
                     filteredList = movieList!!
                 } else {
                     for (movie in movieList!!) {
-                        if (movie.title!!.toLowerCase()==(charString.toLowerCase())) {
+                        if (movie.title!!.toLowerCase() == (charString.toLowerCase())) {
                             filteredList.add(movie)
                         }
                     }
@@ -111,7 +112,7 @@ class LatestMovieFragment :
                 filterResults: FilterResults
             ) {
                 filteredList = filterResults.values as ArrayList<Movie>
-                    listAdapter.submitList(filteredList)
+                listAdapter.submitList(filteredList)
             }
         }
     }
