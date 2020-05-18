@@ -2,7 +2,10 @@ package com.example.moviedb.ui.screen.latestmovielist
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,8 +39,10 @@ class LatestMovieFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler_view?.layoutManager = getLayoutManager()
-
+        search_view?.addTextChangedListener(getTextWatcher(search_view))
+        cancel_image_view.setOnClickListener {
+            search_view.text?.clear()
+        }
     }
 
     private fun toMovieDetail(movie: Movie) {
@@ -52,5 +57,23 @@ class LatestMovieFragment :
     companion object {
         const val KEY_MOVIE_ID = "movie"
         fun newInstance() = LatestMovieFragment()
+    }
+
+    private fun getTextWatcher(editText: EditText): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
+                when (editText) {
+                    search_view -> if (s.length == 1) {
+
+                    } else if (s.length > 3) {
+
+                    }
+                }
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        }
     }
 }

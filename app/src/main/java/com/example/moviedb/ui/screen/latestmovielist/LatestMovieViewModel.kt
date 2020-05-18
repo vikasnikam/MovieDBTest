@@ -14,6 +14,7 @@ class LatestMovieViewModel(
 ) : BaseLoadMoreRefreshViewModel<Movie>() {
 
     val isRecentVisible = MutableLiveData<Boolean>().apply { value = false }
+    val searchText = MutableLiveData<String>().apply { value = "" }
 
 
     override fun loadData(page: Int) {
@@ -23,11 +24,13 @@ class LatestMovieViewModel(
         viewModelScope.launch {
             try {
                 movieRepository.getMovieList(hashMap).results?.let { movieRepository.insertDB(it) }
-               // onLoadSuccess(page, movieRepository.getMovieList(hashMap).results)
+                // onLoadSuccess(page, movieRepository.getMovieList(hashMap).results)
                 onLoadSuccess(page, movieRepository.getMovieListLocal())
             } catch (e: Exception) {
                 onError(e)
             }
         }
     }
+
+
 }
