@@ -10,11 +10,12 @@ import kotlinx.coroutines.launch
 
 
 class LatestMovieViewModel(
-    private val movieRepository: MovieRepository
+     val movieRepository: MovieRepository
 ) : BaseLoadMoreRefreshViewModel<Movie>() {
 
     val isRecentVisible = MutableLiveData<Boolean>().apply { value = false }
     val searchText = MutableLiveData<String>().apply { value = "" }
+    val movie = MutableLiveData<List<Movie>>()
 
 
     override fun loadData(page: Int) {
@@ -26,6 +27,7 @@ class LatestMovieViewModel(
                 movieRepository.getMovieList(hashMap).results?.let { movieRepository.insertDB(it) }
                 // onLoadSuccess(page, movieRepository.getMovieList(hashMap).results)
                 onLoadSuccess(page, movieRepository.getMovieListLocal())
+                movie.value=movieRepository.getMovieListLocal()
             } catch (e: Exception) {
                 onError(e)
             }

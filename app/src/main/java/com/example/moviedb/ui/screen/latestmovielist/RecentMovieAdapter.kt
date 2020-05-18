@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.screen.latestmovielist
 
+import android.widget.Filter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.moviedb.R
 import com.example.moviedb.data.model.Cast
@@ -18,6 +19,10 @@ class RecentMovieAdapter(): BaseListAdapter<Cast, ItemCastBinding>(object : Diff
 
     override fun getLayoutRes(viewType: Int): Int {
         return R.layout.item_cast
+    }
+
+    override fun getFilter(): Filter? {
+        return null
     }
 
 }

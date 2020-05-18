@@ -38,5 +38,7 @@ interface MovieDao {
     @Query("SELECT * FROM movie LIMIT :pageSize OFFSET :pageIndex")
     suspend fun getMoviePage(pageSize: Int, pageIndex: Int): List<Movie>?
 
+    @Query("SELECT * FROM movie WHERE title LIKE '%' || :search || '%'")
+    suspend fun searchMovie(search: String?): List<Movie>?
 
 }

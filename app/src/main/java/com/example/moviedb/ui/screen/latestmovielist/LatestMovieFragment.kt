@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.data.model.Movie
@@ -20,8 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LatestMovieFragment :
     BaseLoadMoreRefreshFragment<FragmentLoadmoreRefreshBinding, LatestMovieViewModel, Movie>() {
-
+    var movieList: MutableList<Movie>? =null
     override val viewModel: LatestMovieViewModel by viewModel()
+    private val latestMovieAdapter = LatestMovieAdapter()
 
     override val listAdapter: BaseListAdapter<Movie, out ViewDataBinding> by lazy {
         LatestMovieAdapter(
@@ -35,6 +36,12 @@ class LatestMovieFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         container?.setBackgroundColor(Color.BLACK)
+        viewModel.apply {
+            movie.observe(viewLifecycleOwner, Observer {
+                movieList= it as MutableList<Movie>?
+                latestMovieAdapter.setLatestMovieData(it)
+            })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +51,7 @@ class LatestMovieFragment :
             search_view.text?.clear()
         }
     }
+
 
     private fun toMovieDetail(movie: Movie) {
         // go to detail page
@@ -66,9 +74,9 @@ class LatestMovieFragment :
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
                 when (editText) {
                     search_view -> if (s.length == 1) {
-
+                       // listAdapter.filter.filter(s)
                     } else if (s.length > 3) {
-
+                       // listAdapter.filter.filter(s)
                     }
                 }
             }

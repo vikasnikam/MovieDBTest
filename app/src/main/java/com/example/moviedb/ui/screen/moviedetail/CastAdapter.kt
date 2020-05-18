@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.screen.moviedetail
 
+import android.widget.Filter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.moviedb.R
 import com.example.moviedb.data.model.Cast
@@ -19,5 +20,7 @@ class CastAdapter() : BaseListAdapter<Cast, ItemCastBinding>(object : DiffUtil.I
     override fun getLayoutRes(viewType: Int): Int {
         return R.layout.item_cast
     }
-
+    override fun getFilter(): Filter? {
+        return null
+    }
 }

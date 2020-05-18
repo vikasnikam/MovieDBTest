@@ -78,4 +78,8 @@ class MovieRepositoryImpl(
         return movieDao.getMoviePage(pageSize, pageIndex)
     }
 
+    override suspend fun searchMovieLocal(movieTitle: String): List<Movie>? {
+         return  movieDao.searchMovie(movieTitle)
+    }
+
 }

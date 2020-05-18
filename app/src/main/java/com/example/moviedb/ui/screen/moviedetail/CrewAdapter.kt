@@ -1,5 +1,6 @@
 package com.example.moviedb.ui.screen.moviedetail
 
+import android.widget.Filter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.moviedb.R
 import com.example.moviedb.data.model.Crew
@@ -21,4 +22,7 @@ class CrewAdapter() : BaseListAdapter<Crew, ItemCastBinding>(object : DiffUtil.I
         return R.layout.item_crew
     }
 
+    override fun getFilter(): Filter? {
+        return null
+    }
 }

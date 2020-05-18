@@ -52,4 +52,6 @@ interface MovieRepository {
 
     suspend fun getMoviePageLocal(pageSize: Int, pageIndex: Int): List<Movie>?
 
+    suspend fun searchMovieLocal(movieTitle: String): List<Movie>?
+
 }
