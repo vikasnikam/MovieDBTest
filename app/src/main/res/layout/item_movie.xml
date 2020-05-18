@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.moviedb.data.model.Movie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_cast"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            app:centerCrop="@{ true }"
+            app:imageUrl="@{ item.fullPosterPath }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:transitionName="@{item.fullPosterPath }"
+            tools:src="@mipmap/ic_launcher" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_play"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_5"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_14"
+            android:background="@color/amber_900"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_cast"
+            android:text="@string/play"
+            android:drawableEnd="@drawable/ic_play_circle_outline_black_24dp"
+            android:drawableTint="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_10"
+            android:text="@{item.title}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintStart_toEndOf="@+id/image_cast"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:text="@{item.release_date}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintStart_toEndOf="@+id/image_cast"
+            app:layout_constraintTop_toBottomOf="@+id/text_name"
+            tools:text="Release Date" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_110"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:text="@{item.overview}"
+            android:textColor="@color/white_70"
+            android:textSize="@dimen/sp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_cast"
+            app:layout_constraintTop_toBottomOf="@+id/text_release_date"
+            android:maxLines="5"
+            android:ellipsize="end"
+            tools:text="overview" />
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/btn_play"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
