@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,11 +21,11 @@ import kotlinx.android.synthetic.main.fragment_loadmore_refresh.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LatestMovieFragment :
-    BaseLoadMoreRefreshFragment<FragmentLoadmoreRefreshBinding, LatestMovieViewModel, Movie>() {
-    var movieList: MutableList<Movie>? =null
+    BaseLoadMoreRefreshFragment<FragmentLoadmoreRefreshBinding, LatestMovieViewModel, Movie>(),
+    Filterable {
     override val viewModel: LatestMovieViewModel by viewModel()
-    private val latestMovieAdapter = LatestMovieAdapter()
-
+    var movieList: MutableList<Movie>? = null
+    var filteredList: MutableList<Movie> = java.util.ArrayList()
     override val listAdapter: BaseListAdapter<Movie, out ViewDataBinding> by lazy {
         LatestMovieAdapter(
             itemClickListener = { toMovieDetail(it) }
@@ -39,7 +41,6 @@ class LatestMovieFragment :
         viewModel.apply {
             movie.observe(viewLifecycleOwner, Observer {
                 movieList= it as MutableList<Movie>?
-                latestMovieAdapter.setLatestMovieData(it)
             })
         }
     }
@@ -74,14 +75,44 @@ class LatestMovieFragment :
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
                 when (editText) {
                     search_view -> if (s.length == 1) {
-                       // listAdapter.filter.filter(s)
+                        filter.filter(s)
                     } else if (s.length > 3) {
-                       // listAdapter.filter.filter(s)
+                        filter.filter(s)
                     }
                 }
             }
 
             override fun afterTextChanged(editable: Editable) {}
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                 filteredList.clear()
+                if (charString.isEmpty()) {
+                    filteredList = movieList!!
+                } else {
+                    for (movie in movieList!!) {
+                        if (movie.title!!.toLowerCase()==(charString.toLowerCase())) {
+                            filteredList.add(movie)
+                        }
+                    }
+                    filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(
+                charSequence: CharSequence,
+                filterResults: FilterResults
+            ) {
+                filteredList = filterResults.values as ArrayList<Movie>
+                    listAdapter.submitList(filteredList)
+            }
         }
     }
 }

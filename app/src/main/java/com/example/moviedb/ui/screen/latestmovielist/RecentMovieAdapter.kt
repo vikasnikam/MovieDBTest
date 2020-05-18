@@ -21,8 +21,5 @@ class RecentMovieAdapter(): BaseListAdapter<Cast, ItemCastBinding>(object : Diff
         return R.layout.item_cast
     }
 
-    override fun getFilter(): Filter? {
-        return null
-    }
 
 }

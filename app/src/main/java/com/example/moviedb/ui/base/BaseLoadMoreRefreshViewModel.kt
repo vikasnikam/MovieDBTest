@@ -23,7 +23,7 @@ abstract class BaseLoadMoreRefreshViewModel<Item>() : BaseViewModel() {
     // scroll listener for recycler view
     val onScrollListener = object : EndlessRecyclerOnScrollListener(getLoadMoreThreshold()) {
         override fun onLoadMore() {
-            doLoadMore()
+           // doLoadMore()
         }
     }
 

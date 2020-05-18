@@ -7,7 +7,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,10 +24,8 @@ abstract class BaseListAdapter<Item, ViewBinding : ViewDataBinding>(callBack: Di
     AsyncDifferConfig.Builder<Item>(callBack)
         .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
         .build()
-), Filterable {
+) {
 
-    var movieList: MutableList<Movie>? =null
-    var movieListFiltered: MutableList<Movie>? =null
 
     /**
      * override this with new list to pass check "if (newList == mList)" in AsyncListDiffer
@@ -62,6 +59,7 @@ abstract class BaseListAdapter<Item, ViewBinding : ViewDataBinding>(callBack: Di
             )
         )
     }
+
 
     /**
      * get layout res based on view type

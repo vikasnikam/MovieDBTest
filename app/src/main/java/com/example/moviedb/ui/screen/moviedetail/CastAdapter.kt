@@ -20,7 +20,5 @@ class CastAdapter() : BaseListAdapter<Cast, ItemCastBinding>(object : DiffUtil.I
     override fun getLayoutRes(viewType: Int): Int {
         return R.layout.item_cast
     }
-    override fun getFilter(): Filter? {
-        return null
-    }
+
 }

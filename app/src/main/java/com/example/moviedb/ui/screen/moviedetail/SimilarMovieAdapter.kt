@@ -21,8 +21,6 @@ class SimilarMovieAdapter: BaseListAdapter<Movie, ItemCastBinding>(object : Diff
     override fun getLayoutRes(viewType: Int): Int {
         return R.layout.item_similar_movie
     }
-    override fun getFilter(): Filter? {
-        return null
-    }
+
 }
 
