@@ -24,7 +24,7 @@ class LatestMovieFragment :
     BaseLoadMoreRefreshFragment<FragmentLoadmoreRefreshBinding, LatestMovieViewModel, Movie>(),
     Filterable {
     override val viewModel: LatestMovieViewModel by viewModel()
-    var movieList: MutableList<Movie>? = null
+    var movieList: ArrayList<Movie>? = null
     var filteredList: MutableList<Movie> = java.util.ArrayList()
     override val listAdapter: BaseListAdapter<Movie, out ViewDataBinding> by lazy {
         LatestMovieAdapter(
@@ -40,7 +40,7 @@ class LatestMovieFragment :
         container?.setBackgroundColor(Color.BLACK)
         viewModel.apply {
             movie.observe(viewLifecycleOwner, Observer {
-                movieList = it as MutableList<Movie>?
+                movieList = it as ArrayList<Movie>?
             })
         }
     }
@@ -75,7 +75,7 @@ class LatestMovieFragment :
 
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
                 when (editText) {
-                    search_view -> if (s.length > 1) {
+                    search_view -> if (s.isNotEmpty()) {
                         filter.filter(s)
                     } else if (s.isEmpty()) {
                         listAdapter.submitList(movieList)
@@ -92,15 +92,17 @@ class LatestMovieFragment :
             override fun performFiltering(charSequence: CharSequence): FilterResults {
                 val charString = charSequence.toString()
                 filteredList.clear()
-                if (charString.isEmpty()) {
-                    filteredList = movieList!!
+                filteredList = if (charString.isEmpty()) {
+                    movieList!!
                 } else {
-                    for (movie in movieList!!) {
-                        if (movie.title!!.toLowerCase() == (charString.toLowerCase())) {
-                            filteredList.add(movie)
+                    movieList!!.filter {
+                        if(charSequence.length == 1){
+                            it.title!!.startsWith(charSequence,0,true)
+                        }else{
+                            charString.toLowerCase() in it.title!!.toLowerCase()
                         }
-                    }
-                    filteredList
+                    } as ArrayList<Movie>
+
                 }
                 val filterResults = FilterResults()
                 filterResults.values = filteredList

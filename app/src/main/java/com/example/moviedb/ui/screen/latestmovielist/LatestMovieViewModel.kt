@@ -25,7 +25,6 @@ class LatestMovieViewModel(
         viewModelScope.launch {
             try {
                 movieRepository.getMovieList(hashMap).results?.let { movieRepository.insertDB(it) }
-                // onLoadSuccess(page, movieRepository.getMovieList(hashMap).results)
                 onLoadSuccess(page, movieRepository.getMovieListLocal())
                 movie.value=movieRepository.getMovieListLocal()
             } catch (e: Exception) {
