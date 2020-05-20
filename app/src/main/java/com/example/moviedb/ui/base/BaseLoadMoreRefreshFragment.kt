@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
+import com.example.moviedb.data.model.SearchedMovie
 import kotlinx.android.synthetic.main.fragment_loadmore_refresh.*
 
 abstract class BaseLoadMoreRefreshFragment<ViewBinding : ViewDataBinding, ViewModel : BaseLoadMoreRefreshViewModel<Item>, Item> :
@@ -14,6 +15,7 @@ abstract class BaseLoadMoreRefreshFragment<ViewBinding : ViewDataBinding, ViewMo
     override val layoutId: Int = R.layout.fragment_loadmore_refresh
 
     abstract val listAdapter: BaseListAdapter<Item, out ViewDataBinding>
+    abstract val recentSelectedMovieAdapter: BaseListAdapter<SearchedMovie, out ViewDataBinding>
 
     open fun getLayoutManager(): RecyclerView.LayoutManager =
         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -48,4 +50,5 @@ abstract class BaseLoadMoreRefreshFragment<ViewBinding : ViewDataBinding, ViewMo
         super.onDestroyView()
         recycler_view?.adapter = null
     }
+
 }

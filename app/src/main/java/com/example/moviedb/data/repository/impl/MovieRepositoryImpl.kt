@@ -2,6 +2,7 @@ package com.example.moviedb.data.repository.impl
 
 import com.example.moviedb.data.local.dao.MovieDao
 import com.example.moviedb.data.model.Movie
+import com.example.moviedb.data.model.SearchedMovie
 import com.example.moviedb.data.remote.ApiService
 import com.example.moviedb.data.remote.response.GetCastAndCrewResponse
 import com.example.moviedb.data.remote.response.GetMovieListResponse
@@ -46,6 +47,10 @@ class MovieRepositoryImpl(
         return movieDao.getMovieList()
     }
 
+    override suspend fun getSearchedMovieListLocal(): List<SearchedMovie>? {
+        return  movieDao.getSearchedMovieList()
+    }
+
     override suspend fun getMovieLocal(id: String): Movie? {
         return movieDao.getMovie(id)
     }
@@ -56,6 +61,9 @@ class MovieRepositoryImpl(
 
     override suspend fun insertLocal(list: List<Movie>) {
         return movieDao.insert(list)
+    }
+    override suspend fun insertSearchedMovieLocal(searchedMovie: SearchedMovie) {
+        return movieDao.insertSearchedMovie(searchedMovie)
     }
 
     override suspend fun updateLocal(movie: Movie) {

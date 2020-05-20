@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.moviedb.data.model.Movie
+import com.example.moviedb.data.model.SearchedMovie
 
 @Dao
 interface MovieDao {
@@ -18,6 +19,12 @@ interface MovieDao {
 
     @Insert(onConflict = IGNORE)
     suspend fun insert(movie: Movie)
+
+    @Insert(onConflict = IGNORE)
+    suspend fun insertSearchedMovie(searchedMovie: SearchedMovie)
+
+    @Query("SELECT * FROM SearchedMovie")
+    suspend fun getSearchedMovieList(): List<SearchedMovie>?
 
     @Insert(onConflict = IGNORE)
     suspend fun insert(list: List<Movie>)

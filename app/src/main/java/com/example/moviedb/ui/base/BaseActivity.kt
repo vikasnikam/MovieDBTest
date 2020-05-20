@@ -1,6 +1,7 @@
 package com.example.moviedb.ui.base
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,6 +26,8 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding, ViewModel : BaseViewM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         if (::viewBinding.isInitialized.not()) {
             viewBinding = DataBindingUtil.setContentView(this, layoutId)
             viewBinding.setVariable(BR.viewModel,viewModel)

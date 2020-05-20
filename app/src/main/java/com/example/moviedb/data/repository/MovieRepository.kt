@@ -1,6 +1,7 @@
 package com.example.moviedb.data.repository
 
 import com.example.moviedb.data.model.Movie
+import com.example.moviedb.data.model.SearchedMovie
 import com.example.moviedb.data.remote.response.GetCastAndCrewResponse
 import com.example.moviedb.data.remote.response.GetMovieListResponse
 import com.example.moviedb.data.remote.response.GetMovieVideos
@@ -36,9 +37,13 @@ interface MovieRepository {
      */
     suspend fun getMovieListLocal(): List<Movie>?
 
+    suspend fun getSearchedMovieListLocal(): List<SearchedMovie>?
+
     suspend fun getMovieLocal(id: String): Movie?
 
     suspend fun insertLocal(movie: Movie)
+
+    suspend fun insertSearchedMovieLocal(searchedMovie: SearchedMovie)
 
     suspend fun insertLocal(list: List<Movie>)
 
